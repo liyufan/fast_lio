@@ -78,7 +78,7 @@ Follow [livox_ros_driver Installation](https://github.com/Livox-SDK/livox_ros_dr
 
 *Remarks:*
 - Since the FAST-LIO must support Livox serials LiDAR firstly, so the **livox_ros_driver** must be installed and **sourced** before run any FAST-LIO luanch file.
-- How to source? The easiest way is add the line ``` source $Livox_ros_driver_dir$/devel/setup.bash ``` to the end of file ``` ~/.bashrc ```, where ``` $Livox_ros_driver_dir$ ``` is the directory of the livox ros driver workspace (should be the ``` ws_livox ``` directory if you completely followed the livox official document).
+- How to source? The easiest way is add the line ``` source $Livox_ros_driver_dir/devel/setup.bash ``` to the end of file ``` ~/.bashrc ```, where ``` $Livox_ros_driver_dir ``` is the directory of the livox ros driver workspace (should be the ``` ws_livox ``` directory if you completely followed the livox official document).
 
 
 ## 2. Build
@@ -137,13 +137,13 @@ execute the following command to download the image and create the container.
 Clone the repository and catkin_make:
 
 ```
-    cd ~/$A_ROS_DIR$/src
-    git clone https://github.com/hku-mars/FAST_LIO.git
-    cd FAST_LIO
-    git submodule update --init
-    cd ../..
-    catkin_make
-    source devel/setup.bash
+cd ~/catkin_ws/src
+git clone https://github.com/hku-mars/FAST_LIO.git
+cd FAST_LIO
+git submodule update --init
+cd ../..
+catkin_make
+source devel/setup.bash
 ```
 - Remember to source the livox_ros_driver before build (follow 1.3 **livox_ros_driver**)
 - If you want to use a custom build of PCL, add the following line to ~/.bashrc
@@ -160,10 +160,10 @@ C. We recommend to set the **extrinsic_est_en** to false if the extrinsic is giv
 ### 3.1 For Avia
 Connect to your PC to Livox Avia LiDAR by following  [Livox-ros-driver installation](https://github.com/Livox-SDK/livox_ros_driver), then
 ```
-    cd ~/$FAST_LIO_ROS_DIR$
-    source devel/setup.bash
-    roslaunch fast_lio mapping_avia.launch
-    roslaunch livox_ros_driver livox_lidar_msg.launch
+cd ~/catkin_ws
+source devel/setup.bash
+roslaunch fast_lio mapping_avia.launch
+roslaunch livox_ros_driver livox_lidar_msg.launch
 ```
 - For livox serials, FAST-LIO only support the data collected by the ``` livox_lidar_msg.launch ``` since only its ``` livox_ros_driver/CustomMsg ``` data structure produces the timestamp of each LiDAR point which is very important for the motion undistortion. ``` livox_lidar.launch ``` can not produce it right now.
 - If you want to change the frame rate, please modify the **publish_freq** parameter in the [livox_lidar_msg.launch](https://github.com/Livox-SDK/livox_ros_driver/blob/master/livox_ros_driver/launch/livox_lidar_msg.launch) of [Livox-ros-driver](https://github.com/Livox-SDK/livox_ros_driver) before make the livox_ros_driver pakage.
@@ -197,9 +197,9 @@ Edit ``` config/velodyne.yaml ``` to set the below parameters:
 
 Step B: Run below
 ```
-    cd ~/$FAST_LIO_ROS_DIR$
-    source devel/setup.bash
-    roslaunch fast_lio mapping_velodyne.launch
+cd ~/catkin_ws
+source devel/setup.bash
+roslaunch fast_lio mapping_velodyne.launch
 ```
 
 Step C: Run LiDAR's ros driver or play rosbag.
@@ -209,7 +209,8 @@ Step C: Run LiDAR's ros driver or play rosbag.
 Install MARSIM: https://github.com/hku-mars/MARSIM and run MARSIM as below
 
 ```
-cd ~/$MARSIM_ROS_DIR$
+cd ~/marsim_ws
+source devel/setup.bash
 roslaunch test_interface single_drone_avia.launch
 ```
 
@@ -245,7 +246,6 @@ Run:
 ```
 roslaunch fast_lio mapping_avia.launch
 rosbag play YOUR_DOWNLOADED.bag
-
 ```
 
 ### 4.2 Velodyne HDL-32E Rosbag
